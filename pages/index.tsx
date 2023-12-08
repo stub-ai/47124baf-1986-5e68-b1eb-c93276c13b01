@@ -1,13 +1,24 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React from 'react';
+import Header from '../components/Header';
+import Login from '../components/Login';
 
-const inter = Inter({ subsets: ['latin'] })
+const Home = () => {
+  const handleAccept = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.append('agreement', 'yes');
+    window.location.href = url.toString();
+  };
 
-export default function Home() {
+  const handleDecline = () => {
+    alert('You are not authorized to proceed.');
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-    </main>
-  )
-}
+    <div>
+      <Header />
+      <Login onAccept={handleAccept} onDecline={handleDecline} />
+    </div>
+  );
+};
+
+export default Home;
