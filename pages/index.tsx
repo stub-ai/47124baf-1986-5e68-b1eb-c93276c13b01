@@ -1,13 +1,25 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React, { useState } from 'react';
+import Header from '../components/Header';
+import Login from '../components/Login';
 
-const inter = Inter({ subsets: ['latin'] })
+const Home = () => {
+  const [message, setMessage] = useState('');
 
-export default function Home() {
+  const handleAccept = () => {
+    window.location.href = `${window.location.href}?agreement=yes`;
+  };
+
+  const handleDecline = () => {
+    setMessage('You are not authorized to proceed.');
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-    </main>
-  )
-}
+    <div>
+      <Header />
+      <Login onAccept={handleAccept} onDecline={handleDecline} />
+      {message && <p className="text-center mt-4 text-red-500">{message}</p>}
+    </div>
+  );
+};
+
+export default Home;
