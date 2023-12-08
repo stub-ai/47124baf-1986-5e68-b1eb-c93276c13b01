@@ -1,13 +1,32 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React from 'react';
+import Header from '../components/Header';
+import Login from '../components/Login';
 
-const inter = Inter({ subsets: ['latin'] })
+const Home = () => {
+  const handleAccept = () => {
+    fetch('/api/hello', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ requestor: true }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        window.location.href = data.url;
+      });
+  };
 
-export default function Home() {
+  const handleDecline = () => {
+    alert('You are not authorized to proceed.');
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-    </main>
-  )
-}
+    <div>
+      <Header />
+      <Login onAccept={handleAccept} onDecline={handleDecline} />
+    </div>
+  );
+};
+
+export default Home;
